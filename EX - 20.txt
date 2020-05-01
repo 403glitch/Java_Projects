@@ -1,0 +1,32 @@
+public class GreatestCommonDivisor {
+    public static int getGreatestCommonDivisor(int first , int second){
+        if ( first < 10 || second < 10){
+            return -1;
+        }
+        
+        int gcd = 0;
+        int min = Math.min(first,second);
+        for (int i = 1 ; i <= min ; i++){
+           if (first % i == 0 && second % i == 0){
+               gcd = i;
+           }
+        }
+        return gcd;
+    }
+}
+
+
+- The Java.lang.math.min() function is an inbuilt function in java which returns minimum of two numbers. The arguments are taken in int, double, float and long.If a negative and a positive number is passed as argument then the negative result is generated. And if both parameters passed are negative then the number with the higher magnitude is generated as result.
+ex-  public class Gfg { 
+  
+    public static void main(String args[]) 
+    { 
+        double a = 12.123; 
+        double b = 12.456; 
+  
+        // prints the minimum of two numbers 
+        System.out.println(Math.min(a, b)); 
+    } 
+} 
+
+output - 12.123

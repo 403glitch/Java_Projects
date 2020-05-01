@@ -1,0 +1,135 @@
+public class Bank {
+    private ArrayList<Branch> branches = new ArrayList<Branch>();
+ 
+    public boolean addNewBranch(String name){
+        int index = findBranch(name);
+        if (index >= 0){
+            System.out.println("the branch is already created!");
+            return true;
+        }else {
+            this.branches.add(new Branch(name));
+            System.out.println("the branch "+name+" was created!");
+            return false;
+        }
+ 
+ 
+ 
+    }
+    public boolean addCustomer(String branchName,String customerName, Double transaction){
+        int index = findBranch(branchName);
+        if (index >= 0 ){
+            this.branches.get(index).addNewCustomer(customerName,transaction);
+            return true;
+ 
+        }else {
+            System.out.println("the branch was not found!");
+            return false;
+        }
+    }
+    public boolean addTransaction (String branchName,String customerName,Double transaction){
+        int index = findBranch(branchName);
+        if (index >= 0){
+            this.branches.get(index).addNewTransaction(customerName,transaction);
+            return true;
+        }else {
+            System.out.println("the branch was not found");
+            return false;
+        }
+    }
+    public void listOfCustomers (String branchName){
+        int index = findBranch(branchName);
+        if (index >= 0){
+            ArrayList<Customer> customersList = branches.get(index).getCustomers();
+            for (int i = 0 ; i < customersList.size() ; i++){
+                System.out.println("Customer Name: "+customersList.get(i).getName());
+                ArrayList<Double> transactionList = customersList.get(i).getTransactions();
+                for (int j = 0 ; j < transactionList.size();j++){
+                    System.out.println("      "+transactionList.get(j).doubleValue());
+                }
+            }
+        }else {
+            System.out.println("the branch was not found!");
+        }
+    }
+    private int findBranch (String name){
+        for (int i = 0 ; i < branches.size() ; i++){
+            if (branches.get(i).getName() == name){
+                return i;
+            }
+        }
+        return -1;
+    }
+ 
+}
+public class Branch {
+    private String name;
+    private ArrayList<Customer> customers = new ArrayList<Customer>();
+ 
+    public Branch(String name) {
+        this.name = name;
+    }
+ 
+    public boolean addNewCustomer(String name, Double transaction){
+        int index = findCustomer(name);
+        if (index < 0){
+            customers.add(new Customer(name,transaction));
+            return true;
+        }else{
+            System.out.println("customer has already been created!");
+            return false;
+        }
+    }
+    public boolean addNewTransaction(String customer,Double transaction){
+        int index = findCustomer(customer);
+        if (index >= 0){
+            this.customers.get(index).addTransaction(transaction);
+            return true;
+        }else {
+            System.out.println("the customer was not found!");
+            return false;
+        }
+ 
+    }
+    private int findCustomer(String name){
+        for (int i = 0; i<customers.size(); i++){
+            if (customers.get(i).getName() == name){
+                return i;
+            }
+        }
+        return -1;
+    }
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public ArrayList<Customer> getCustomers() {
+        return customers;
+    }
+}
+public class Customer {
+    private ArrayList<Double> transactions = new ArrayList<>();
+    private String name;
+ 
+    public Customer(String name, Double transaction) {
+        this.name = name;
+        this.transactions.add(transaction);
+        System.out.println("The customer with name: "+name+" with transaction: "+transaction.doubleValue()+ " was created.");
+ 
+    }
+ 
+    public String getName() {
+ 
+        return name;
+    }
+    public void addTransaction(Double transaction){
+ 
+        this.transactions.add(transaction);
+        System.out.println(transaction+" added.");
+    }
+ 
+    public ArrayList<Double> getTransactions() {
+ 
+        return transactions;
+    }
+}
